@@ -10,7 +10,7 @@ import XCTest
 
 struct StringCalculator {
     
-    func add(_ input: String) -> Int {
+    static func add(_ input: String) -> Int {
         guard let intInput = Int(input) else { return 0 }
         return intInput
     }
@@ -20,18 +20,12 @@ struct StringCalculator {
 class StringCalculatorTests: XCTestCase {
 
     func test_add_returnsZeroForEmptyInput() {
-        let sut = StringCalculator()
-        
-        let receivedSum = sut.add("")
-        
+        let receivedSum = StringCalculator.add("")
         XCTAssertEqual(receivedSum, 0)
     }
 
     func test_add_withSingleNumberInputReturnsInput() {
-        let sut = StringCalculator()
-        
-        let receivedSum = sut.add("2")
-        
+        let receivedSum = StringCalculator.add("2")
         XCTAssertEqual(receivedSum, 2)
     }
     
