@@ -44,4 +44,9 @@ class StringCalculatorTests: XCTestCase {
         XCTAssertEqual(receivedSum, 5)
     }
     
+    func test_add_withMultiplesNumbersMixedDelimitedReturnsTheSum() {
+        let receivedSum = StringCalculator.add("1\n2,3\n4")
+        XCTAssertEqual(receivedSum, 10)
+    }
+    
 }
