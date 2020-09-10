@@ -24,7 +24,7 @@ struct StringCalculator {
     static func add(_ input: String) throws -> Int {
         let (parsedInput, customDelimiter) = parseInput(input)
         
-        let operands = parsedInput.split(whereSeparator: { separatorRule($0, customDelimiter: customDelimiter) })
+        let operands = splitInput(parsedInput, customDelimiter: customDelimiter)
             .compactMap({ Int($0) })
         
         try validateNotNegativeNumbers(operands)
@@ -55,11 +55,12 @@ struct StringCalculator {
         input.hasPrefix("//")
     }
     
-    private static func separatorRule(_ character: Character, customDelimiter: String?) -> Bool {
+    private static func splitInput(_ input: String, customDelimiter: String?) -> [String] {
         if let customDelimiter = customDelimiter {
-            return String(character) == customDelimiter
+            return input.components(separatedBy: customDelimiter)
+        } else {
+            return input.components(separatedBy: CharacterSet(charactersIn: "\n,"))
         }
-        return character == "," || character == "\n"
     }
     
     private static func validateNotNegativeNumbers(_ operands: [Int]) throws {
@@ -119,6 +120,11 @@ class StringCalculatorTests: XCTestCase {
     
     func test_add_singleCharDelimiterCanBeDefined() throws {
         let receivedSum = try StringCalculator.add("//#\n1#2")
+        XCTAssertEqual(receivedSum, 3)
+    }
+    
+    func test_add_multiCharDelimiterCanBeDefined() throws {
+        let receivedSum = try StringCalculator.add("//###\n1###2")
         XCTAssertEqual(receivedSum, 3)
     }
     
