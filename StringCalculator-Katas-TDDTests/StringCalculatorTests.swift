@@ -22,7 +22,19 @@ struct StringCalculator {
     }
 
     static func add(_ input: String) throws -> Int {
-        let operands = input.split(whereSeparator: separatorRule)
+        var customDelimiter: String?
+        var parsedInput = input
+        
+        if input.hasPrefix("//"), let newLineIndex = input.firstIndex(where: { $0 == "\n" }) {
+            let customDelimiterStartIndex = input.index(input.startIndex, offsetBy: 2)
+            let customDelimiterIndexRange = customDelimiterStartIndex..<newLineIndex
+            customDelimiter = String(input[customDelimiterIndexRange])
+            
+            let customDelimiterDefinitionRange = input.startIndex...newLineIndex
+            parsedInput.removeSubrange(customDelimiterDefinitionRange)
+        }
+        
+        let operands = parsedInput.split(whereSeparator: { separatorRule($0, customDelimiter: customDelimiter) })
             .compactMap({ Int($0) })
         
         try validateNotNegativeNumbers(operands)
@@ -33,8 +45,11 @@ struct StringCalculator {
         })
     }
     
-    private static func separatorRule(_ character: Character) -> Bool {
-        character == "," || character == "\n"
+    private static func separatorRule(_ character: Character, customDelimiter: String?) -> Bool {
+        if let customDelimiter = customDelimiter {
+            return String(character) == customDelimiter
+        }
+        return character == "," || character == "\n"
     }
     
     private static func validateNotNegativeNumbers(_ operands: [Int]) throws {
@@ -90,6 +105,11 @@ class StringCalculatorTests: XCTestCase {
     func test_add_numbersGreatherThanThousandAreIgnored() throws {
         let receivedSum = try StringCalculator.add("1000\n2000,3000\n4000")
         XCTAssertEqual(receivedSum, 1000)
+    }
+    
+    func test_add_singleCharDelimiterCanBeDefined() throws {
+        let receivedSum = try StringCalculator.add("//#\n1#2")
+        XCTAssertEqual(receivedSum, 3)
     }
     
 }
