@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import StringCalculator_Katas_TDD
 
 class StringCalculatorTests: XCTestCase {
 
