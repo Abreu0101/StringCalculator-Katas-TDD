@@ -22,8 +22,7 @@ struct StringCalculator {
     }
 
     static func add(_ input: String) throws -> Int {
-        let customDelimiter = getCustomDelimeterIfPresent(input)
-        let parsedInput = cleanupInputIfNeeded(input)
+        let (parsedInput, customDelimiter) = parseInput(input)
         
         let operands = parsedInput.split(whereSeparator: { separatorRule($0, customDelimiter: customDelimiter) })
             .compactMap({ Int($0) })
@@ -35,26 +34,21 @@ struct StringCalculator {
             acc += e
         })
     }
-    
-    private static func getCustomDelimeterIfPresent(_ input: String) -> String? {
+
+    private static func parseInput(_ input: String) -> (input: String, customDelimiter: String?) {
         guard hasCustomDelimiter(input), let newLineIndex = input.firstIndex(where: { $0 == "\n" }) else {
-            return nil
+            return (input, nil)
         }
         
         let customDelimiterStartIndex = input.index(input.startIndex, offsetBy: 2)
         let customDelimiterIndexRange = customDelimiterStartIndex..<newLineIndex
-        return String(input[customDelimiterIndexRange])
-    }
-    
-    private static func cleanupInputIfNeeded(_ input: String) -> String {
-        guard hasCustomDelimiter(input), let newLineIndex = input.firstIndex(where: { $0 == "\n" }) else {
-            return input
-        }
+        let customDelimiter = String(input[customDelimiterIndexRange])
         
         var inputCleaned = input
         let customDelimiterDefinitionRange = input.startIndex...newLineIndex
         inputCleaned.removeSubrange(customDelimiterDefinitionRange)
-        return inputCleaned
+        
+        return (inputCleaned, customDelimiter)
     }
     
     private static func hasCustomDelimiter(_ input: String) -> Bool {
