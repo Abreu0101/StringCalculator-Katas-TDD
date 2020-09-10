@@ -27,7 +27,10 @@ struct StringCalculator {
         
         try validateNotNegativeNumbers(operands)
         
-        return operands.reduce(into: 0, { acc, e in acc += e })
+        return operands.reduce(into: 0, { acc, e in
+            guard e <= 1000 else { return }
+            acc += e
+        })
     }
     
     private static func separatorRule(_ character: Character) -> Bool {
@@ -82,6 +85,11 @@ class StringCalculatorTests: XCTestCase {
                 XCTFail("Expected to received negativesNotAllowed, but got \(receivedError) instead")
             }
         }
+    }
+    
+    func test_add_numbersGreatherThanThousandAreIgnored() throws {
+        let receivedSum = try StringCalculator.add("1000\n2000,3000\n4000")
+        XCTAssertEqual(receivedSum, 1000)
     }
     
 }
