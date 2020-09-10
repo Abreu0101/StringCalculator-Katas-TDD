@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5BA8565F250AA90D00C3174C /* StringCalculator_Katas_TDD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA85655250AA90C00C3174C /* StringCalculator_Katas_TDD.framework */; };
 		5BA85666250AA90D00C3174C /* StringCalculator_Katas_TDD.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BA85658250AA90C00C3174C /* StringCalculator_Katas_TDD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5BA85670250AAA9C00C3174C /* StringCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8566F250AAA9C00C3174C /* StringCalculatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,7 @@
 		5BA85659250AA90C00C3174C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BA8565E250AA90C00C3174C /* StringCalculator-Katas-TDDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "StringCalculator-Katas-TDDTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA85665250AA90D00C3174C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BA8566F250AAA9C00C3174C /* StringCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringCalculatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA85665250AA90D00C3174C /* Info.plist */,
+				5BA8566F250AAA9C00C3174C /* StringCalculatorTests.swift */,
 			);
 			path = "StringCalculator-Katas-TDDTests";
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 					};
 					5BA8565D250AA90C00C3174C = {
 						CreatedOnToolsVersion = 11.6;
+						LastSwiftMigration = 1160;
 					};
 				};
 			};
@@ -199,6 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA85670250AAA9C00C3174C /* StringCalculatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +388,7 @@
 		5BA8566D250AA90D00C3174C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = BP582CF2S8;
@@ -394,6 +400,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.katas.StringCalculator-Katas-TDDTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -401,6 +408,7 @@
 		5BA8566E250AA90D00C3174C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = BP582CF2S8;
