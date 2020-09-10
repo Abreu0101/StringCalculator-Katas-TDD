@@ -37,7 +37,7 @@ struct StringCalculator {
     }
     
     private static func getCustomDelimeterIfPresent(_ input: String) -> String? {
-        guard input.hasPrefix("//"), let newLineIndex = input.firstIndex(where: { $0 == "\n" }) else {
+        guard hasCustomDelimiter(input), let newLineIndex = input.firstIndex(where: { $0 == "\n" }) else {
             return nil
         }
         
@@ -47,7 +47,7 @@ struct StringCalculator {
     }
     
     private static func cleanupInputIfNeeded(_ input: String) -> String {
-        guard input.hasPrefix("//"), let newLineIndex = input.firstIndex(where: { $0 == "\n" }) else {
+        guard hasCustomDelimiter(input), let newLineIndex = input.firstIndex(where: { $0 == "\n" }) else {
             return input
         }
         
@@ -55,6 +55,10 @@ struct StringCalculator {
         let customDelimiterDefinitionRange = input.startIndex...newLineIndex
         inputCleaned.removeSubrange(customDelimiterDefinitionRange)
         return inputCleaned
+    }
+    
+    private static func hasCustomDelimiter(_ input: String) -> Bool {
+        input.hasPrefix("//")
     }
     
     private static func separatorRule(_ character: Character, customDelimiter: String?) -> Bool {
