@@ -25,6 +25,16 @@ struct StringCalculator {
         let operands = input.split(whereSeparator: separatorRule)
             .compactMap({ Int($0) })
         
+        try validateNotNegativeNumbers(operands)
+        
+        return operands.reduce(into: 0, { acc, e in acc += e })
+    }
+    
+    private static func separatorRule(_ character: Character) -> Bool {
+        character == "," || character == "\n"
+    }
+    
+    private static func validateNotNegativeNumbers(_ operands: [Int]) throws {
         let negativeNumbers = operands.filter({ $0 < 0 })
         if !negativeNumbers.isEmpty {
             let negativeNumbersCommandSeparated = negativeNumbers.map({ "\($0)," })
@@ -32,12 +42,6 @@ struct StringCalculator {
                 .dropLast(1)
             throw Error.negativesNotAllowed(message: "negatives not allowed: \(negativeNumbersCommandSeparated)")
         }
-        
-        return operands.reduce(into: 0, { acc, e in acc += e })
-    }
-    
-    private static func separatorRule(_ character: Character) -> Bool {
-        character == "," || character == "\n"
     }
     
 }
