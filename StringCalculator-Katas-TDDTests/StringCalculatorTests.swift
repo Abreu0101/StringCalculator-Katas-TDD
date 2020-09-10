@@ -11,12 +11,13 @@ import XCTest
 struct StringCalculator {
     
     static func add(_ input: String) -> Int {
-        let operandsLiteral = input.split(whereSeparator: { $0 == "," || $0 == "\n" })
-        let result = operandsLiteral
+        return input.split(whereSeparator: separatorRule)
             .compactMap({ Int($0) })
             .reduce(into: 0, { acc, e in acc += e })
-        
-        return result
+    }
+    
+    private static func separatorRule(_ character: Character) -> Bool {
+        character == "," || character == "\n"
     }
     
 }
