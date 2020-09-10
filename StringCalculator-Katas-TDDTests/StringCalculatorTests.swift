@@ -11,7 +11,7 @@ import XCTest
 struct StringCalculator {
     
     static func add(_ input: String) -> Int {
-        let operandsLiteral = input.split(separator: ",")
+        let operandsLiteral = input.split(whereSeparator: { $0 == "," || $0 == "\n" })
         let result = operandsLiteral
             .compactMap({ Int($0) })
             .reduce(into: 0, { acc, e in acc += e })
@@ -37,4 +37,10 @@ class StringCalculatorTests: XCTestCase {
         let receivedSum = StringCalculator.add("10,20")
         XCTAssertEqual(receivedSum, 30)
     }
+    
+    func test_add_withTwoNumbersNewlineDelimitedReturnsTheSum() {
+        let receivedSum = StringCalculator.add("2\n3")
+        XCTAssertEqual(receivedSum, 5)
+    }
+    
 }
